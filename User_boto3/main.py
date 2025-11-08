@@ -26,43 +26,33 @@ def create_user_with_policies(username, policy_file):
     managed_policies = data.get("managed_policies", [])
     custom_policies = data.get("custom_policies", [])
 
-#--------++++++++++++++++
-
     print(f"Creating IAM user: {username}")
+
+    # ---------------------- USER CREATION BLOCK ----------------------
+    user_already_exists = False
     try:
         iam.create_user(UserName=username)
+        print(f" User '{username}' created successfully.")
     except ClientError as e:
         if e.response['Error']['Code'] == 'EntityAlreadyExists':
-            print(f" User '{username}' already exists, continuing...")
+            print(f" User '{username}' already exists.")
+            choice = input("Do you want to continue and modify this existing user's policies? Type 'yes' to continue: ").strip().lower()
+            if choice != "yes":
+                print(" Skipping any changes to the existing user.")
+                return  # exit the function — do nothing more
+            else:
+                print(" Continuing with existing user changes...")
+                user_already_exists = True
         else:
             raise
-#-------++++++++++
-#--------++++++++++++++++++
+    # -----------------------------------------------------------------
 
-# If the user already exists, we’ll set a flag to skip the rest
-"""    user_already_exists = False
-    try:
-        iam.create_user(UserName=username)
-        print(f"User '{username}' created successfully.")
-    except ClientError as e:
-        if e.response['Error']['Code'] == 'EntityAlreadyExists':
-            print(f" User '{username}' already exists. Skipping any changes.")
-            user_already_exists = True
-        else:
-            raise
-
-    # If user already exists, stop here
-    if user_already_exists:
-        return
-"""
-
-#----------+++++++
     # Create and attach custom policies
     for policy in custom_policies:
         policy_name = policy["name"]
         policy_doc = json.dumps(policy["document"])
 
-        print(f"Checking if custom policy '{policy_name}' already exists...")
+        print(f" Checking if custom policy '{policy_name}' already exists...")
         existing_arn = get_existing_policy_arn(policy_name)
 
         if existing_arn:
