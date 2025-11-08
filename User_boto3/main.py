@@ -26,6 +26,8 @@ def create_user_with_policies(username, policy_file):
     managed_policies = data.get("managed_policies", [])
     custom_policies = data.get("custom_policies", [])
 
+#--------++++++++++++++++
+
     print(f"Creating IAM user: {username}")
     try:
         iam.create_user(UserName=username)
@@ -34,7 +36,27 @@ def create_user_with_policies(username, policy_file):
             print(f" User '{username}' already exists, continuing...")
         else:
             raise
+#-------++++++++++
+#--------++++++++++++++++++
 
+# If the user already exists, we’ll set a flag to skip the rest
+"""    user_already_exists = False
+    try:
+        iam.create_user(UserName=username)
+        print(f"User '{username}' created successfully.")
+    except ClientError as e:
+        if e.response['Error']['Code'] == 'EntityAlreadyExists':
+            print(f" User '{username}' already exists. Skipping any changes.")
+            user_already_exists = True
+        else:
+            raise
+
+    # If user already exists, stop here
+    if user_already_exists:
+        return
+"""
+
+#----------+++++++
     # Create and attach custom policies
     for policy in custom_policies:
         policy_name = policy["name"]
