@@ -5,18 +5,18 @@ It supports both **AWS-managed** and **custom policies** defined in a local JSON
 
 ---
 
-## 🚀 Features
+## Features
 
-- ✅ Creates a new IAM user automatically.  
-- ⚠️ If the user already exists, prompts for confirmation before making changes.  
-- 📜 Creates custom IAM policies from a JSON file (if they don’t already exist).  
-- 🔗 Attaches both custom and AWS-managed policies to the user.  
-- 🔑 Automatically generates access keys for programmatic access.  
-- 🧩 Safe to rerun — skips duplicate policy and user creation gracefully.
+-  Creates a new IAM user automatically.  
+-  If the user already exists, prompts for confirmation before making changes.  
+-  Creates custom IAM policies from a JSON file (if they don’t already exist).  
+-  Attaches both custom and AWS-managed policies to the user.  
+-  Automatically generates access keys for programmatic access.  
+-  Safe to rerun — skips duplicate policy and user creation gracefully.
 
 ---
 
-## 🗂️ Project Structure
+##  Project Structure
 
 .
 
@@ -31,7 +31,7 @@ Copy code
 
 ---
 
-## ⚙️ Prerequisites
+##  Prerequisites
 
 Before running the script, ensure you have:
 
@@ -47,7 +47,7 @@ Before running the script, ensure you have:
 
 ```bash
 pip install boto3
-🧩 policies.json Example
+policies.json Example
 Your policies.json defines which policies to create and attach.
 
 json
@@ -73,7 +73,7 @@ Copy code
     }
   ]
 }
-🖥️ How to Run
+How to Run
 Clone or copy this project.
 
 Make sure policies.json is in the same directory as main.py.
