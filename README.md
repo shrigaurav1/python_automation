@@ -85,6 +85,3 @@ Copy code
 python main.py
 Enter the IAM username when prompted:
 
-pgsql
-Copy code
-Enter the IAM username to create: demo-user
