@@ -1,0 +1,33 @@
+histogram_quantile(
+  0.50,
+  sum(rate(http_request_duration_seconds_bucket[5m])) by (le)
+)
+
+histogram_quantile(
+  0.95,
+  sum(rate(http_request_duration_seconds_bucket[5m])) by (le)
+)
+
+histogram_quantile(
+  0.99,
+  sum by (le, service) (
+    rate(http_request_duration_seconds_bucket[5m])
+  )
+)
+
+histogram_quantile(
+  0.95,
+  sum by (le, pod) (
+    rate(http_request_duration_seconds_bucket[5m])
+  )
+)
+
+histogram_quantile(
+  0.99,
+  sum(rate(nginx_ingress_controller_request_duration_seconds_bucket[5m])) by (le)
+)
+
+histogram_quantile(
+  0.95,
+  sum(rate(aws_lb_target_response_time_seconds_bucket[5m])) by (le)
+)
